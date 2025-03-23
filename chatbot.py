@@ -5,7 +5,7 @@ import uuid
 import pandas as pd
 from datetime import datetime, timezone
 from qdrant_client import QdrantClient
-from qdrant_client.models import VectorParams, Distance, ScalarQuantization
+from qdrant_client.models import VectorParams, Distance
 from langchain.chains import RetrievalQA
 from langchain_community.vectorstores import Qdrant  # ✅ Fixed Import
 from langchain_community.embeddings import HuggingFaceEmbeddings  # ✅ Fixed Import
@@ -36,8 +36,7 @@ if not client.collection_exists(collection_name):
         vectors_config={
             "default": VectorParams(
                 size=384, 
-                distance=Distance.COSINE, 
-                quantization=ScalarQuantization(bits=8)
+                distance=Distance.COSINE
             )
         }
     )
