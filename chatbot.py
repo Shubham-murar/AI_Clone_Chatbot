@@ -8,23 +8,28 @@ from dotenv import load_dotenv
 from qdrant_client import QdrantClient
 from qdrant_client.models import VectorParams, Distance
 from langchain.chains import RetrievalQA
-from langchain.vectorstores import Qdrant  # Alternative import path
-from langchain_community.embeddings import HuggingFaceEmbeddings  # ✅ Fixed Import
+from langchain_community.vectorstores import Qdrant  # ✅ Corrected Import
+from langchain_community.embeddings import HuggingFaceEmbeddings  # ✅ Corrected Import
+from langchain_core.pydantic_v1 import BaseModel, Field  # ✅ Pydantic for validation
 from langchain.llms.base import LLM
 from typing import Any, List, Optional
 
-# Load environment variables
+# ------------------------------
+# 1️⃣ Load Environment Variables
+# ------------------------------
 load_dotenv()
 
-# Load API keys
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 ARIZE_API_KEY = os.getenv("ARIZE_API_KEY")
 ARIZE_SPACE_ID = os.getenv("ARIZE_SPACE_ID")
 
+if not GROQ_API_KEY:
+    raise ValueError("❌ GROQ_API_KEY is missing. Check your .env file.")
+
 print("✅ API Keys Loaded!")
 
 # ------------------------------
-# 1️⃣ Set up Qdrant (Vector Database)
+# 2️⃣ Set Up Qdrant (Vector Database)
 # ------------------------------
 collection_name = "ai_clone"
 client = QdrantClient(path="qdrant_db")  # ✅ Uses persistent storage
@@ -38,16 +43,16 @@ if not client.collection_exists(collection_name):
 print(f"✅ Qdrant collection '{collection_name}' is ready!")
 
 # ------------------------------
-# 2️⃣ Load Embeddings & Vector Store
+# 3️⃣ Load Embeddings & Vector Store
 # ------------------------------
 hf_embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 lc_vectorstore = Qdrant(client, collection_name, hf_embeddings)
 
 # ------------------------------
-# 3️⃣ Custom LLM Wrapper for Groq API
+# 4️⃣ Custom LLM Wrapper for Groq API (Fixed)
 # ------------------------------
-class GroqLLM(LLM):
-    api_key: str
+class GroqLLM(LLM, BaseModel):  # ✅ Uses Pydantic for validation
+    api_key: str = Field(..., env="GROQ_API_KEY")  # ✅ Ensures key is required
     endpoint: str = "https://api.groq.com/openai/v1/chat/completions"
 
     @property
@@ -71,11 +76,11 @@ class GroqLLM(LLM):
         except requests.exceptions.RequestException as e:
             return f"❌ Groq API error: {e}"
 
-# ✅ Initialize the LLM with API key
+# ✅ Instantiate the LLM with API key
 groq_llm = GroqLLM(api_key=GROQ_API_KEY)
 
 # ------------------------------
-# 4️⃣ Build Retrieval QA Chain
+# 5️⃣ Build Retrieval QA Chain
 # ------------------------------
 retriever = lc_vectorstore.as_retriever(search_kwargs={"k": 10, "score_threshold": 0.2})  # Lower threshold
 
@@ -114,7 +119,7 @@ def get_answer(question: str) -> str:
     return response  # If response is already a string
 
 # ------------------------------
-# 5️⃣ Arize AI Logging (Fixed)
+# 6️⃣ Arize AI Logging (Fixed)
 # ------------------------------
 try:
     from arize.pandas.logger import Client, Schema
@@ -172,7 +177,7 @@ except ImportError:
         print("⚠️ Arize AI not installed or configured.")
 
 # ------------------------------
-# 6️⃣ Run Example Chatbot Interaction
+# 7️⃣ Run Example Chatbot Interaction
 # ------------------------------
 if __name__ == "__main__":
     user_question = "What is Retrieval-Augmented Generation?"
