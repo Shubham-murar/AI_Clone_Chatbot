@@ -8,6 +8,7 @@ torch         # For PyTorch-based models
 transformers  # If using Hugging Face models
 sentence-transformers  # If using embeddings
 langchain  # If using LangChain for AI workflows
+langchain_community  # ✅ Explicitly install langchain_community
 
 # Database (if used)
 qdrant-client  # If using Qdrant vector DB
