@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 from qdrant_client import QdrantClient
 from qdrant_client.models import VectorParams, Distance
 from langchain.chains import RetrievalQA
-from langchain_community.vectorstores import Qdrant  # ✅ Fixed Import
+from langchain.vectorstores import Qdrant  # Alternative import path
 from langchain_community.embeddings import HuggingFaceEmbeddings  # ✅ Fixed Import
 from langchain.llms.base import LLM
 from typing import Any, List, Optional
