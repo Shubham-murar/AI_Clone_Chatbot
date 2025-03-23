@@ -9,7 +9,7 @@ transformers  # Hugging Face models
 sentence-transformers  # Embeddings
 langchain  # AI workflows
 langchain_community  # ✅ Explicitly install langchain_community
-pydantic==1.10.13  # ✅ Ensure Pydantic v1 (Fixes LLM Class Issue)
+pydantic==2.10.6
 
 # Vector DB
 
