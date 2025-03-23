@@ -1,6 +1,7 @@
 import os
 import requests
 import json
+import streamlit as st
 import uuid
 import pandas as pd
 from datetime import datetime, timezone
@@ -18,14 +19,17 @@ from typing import Any, List, Optional
 # 1️⃣ Load Environment Variables
 # ------------------------------
 load_dotenv()
+GROQ_API_KEY = st.secrets.get("GROQ_API_KEY")
+ARIZE_API_KEY = st.secrets.get("ARIZE_API_KEY")  
+ARIZE_SPACE_ID = st.secrets.get("ARIZE_SPACE_ID")
 
-GROQ_API_KEY = os.getenv("GROQ_API_KEY")
-ARIZE_API_KEY = os.getenv("ARIZE_API_KEY")
-ARIZE_SPACE_ID = os.getenv("ARIZE_SPACE_ID")
-
+# Check if keys are missing
 if not GROQ_API_KEY:
-    raise ValueError("❌ GROQ_API_KEY is missing. Check your .env file.")
-
+    raise ValueError("❌ GROQ_API_KEY is missing. Check your Streamlit secrets.")
+if not ARIZE_API_KEY:
+    raise ValueError("❌ ARIZE_API_KEY is missing. Check your Streamlit secrets.")
+if not ARIZE_SPACE_ID:
+    raise ValueError("❌ ARIZE_SPACE_ID is missing. Check your Streamlit secrets.")
 print("✅ API Keys Loaded!")
 
 # ------------------------------
