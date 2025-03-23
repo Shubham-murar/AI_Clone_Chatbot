@@ -3,15 +3,16 @@ streamlit
 python-dotenv  # For loading API keys from .env
 requests       # For making API requests
 
-# Machine Learning & NLP (if needed)
+# Machine Learning & NLP
 torch         # For PyTorch-based models
-transformers  # If using Hugging Face models
-sentence-transformers  # If using embeddings
-langchain  # If using LangChain for AI workflows
+transformers  # Hugging Face models
+sentence-transformers  # Embeddings
+langchain  # AI workflows
 langchain_community  # ✅ Explicitly install langchain_community
+pydantic==1.10.13  # ✅ Ensure Pydantic v1 (Fixes LLM Class Issue)
 
-# Database (if used)
+# Vector DB
 qdrant-client  # If using Qdrant vector DB
 
-# Logging & Debugging
+# Logging & Monitoring
 arize-phoenix  # If using Arize for monitoring
