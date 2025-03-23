@@ -5,7 +5,7 @@ import uuid
 import pandas as pd
 from datetime import datetime, timezone
 from qdrant_client import QdrantClient
-from qdrant_client.models import VectorParams, Distance
+from qdrant_client.models import VectorParams, Distance, ScalarQuantization
 from langchain.chains import RetrievalQA
 from langchain_community.vectorstores import Qdrant  # ✅ Fixed Import
 from langchain_community.embeddings import HuggingFaceEmbeddings  # ✅ Fixed Import
@@ -33,7 +33,13 @@ client = QdrantClient(path="qdrant_db")  # ✅ Uses persistent storage
 if not client.collection_exists(collection_name):
     client.create_collection(
         collection_name=collection_name,
-        vectors_config=VectorParams(size=384, distance=Distance.COSINE)
+        vectors_config={
+            "default": VectorParams(
+                size=384, 
+                distance=Distance.COSINE, 
+                quantization=ScalarQuantization(bits=8)
+            )
+        }
     )
 
 print(f"✅ Qdrant collection '{collection_name}' is ready!")
