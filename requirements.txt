@@ -1,4 +1,16 @@
+# Core dependencies
 streamlit
-python-dotenv
-requests
-# Add other necessary dependencies here
+python-dotenv  # For loading API keys from .env
+requests       # For making API requests
+
+# Machine Learning & NLP (if needed)
+torch         # For PyTorch-based models
+transformers  # If using Hugging Face models
+sentence-transformers  # If using embeddings
+langchain  # If using LangChain for AI workflows
+
+# Database (if used)
+qdrant-client  # If using Qdrant vector DB
+
+# Logging & Debugging
+arize-phoenix  # If using Arize for monitoring
