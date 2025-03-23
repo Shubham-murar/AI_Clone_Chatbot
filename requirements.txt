@@ -11,7 +11,9 @@ langchain  # AI workflows
 langchain_community  # ✅ Explicitly install langchain_community
 pydantic==2.10.6
 
+
 # Vector DB
 
 # Logging & Monitoring
 arize-phoenix  # If using Arize for monitoring
+qdrant-client==1.6.3
