@@ -1,23 +1,44 @@
-# Ignore virtual environment
-venv/
+# Ignore virtual environment  
+venv/  
+env/  
+*.venv  
 
-# Ignore environment files with sensitive data
-.env
+# Ignore environment files with sensitive data  
+.env  
+*.env  
+secrets.toml  
 
-# Ignore system files
-.DS_Store
-Thumbs.db
+# Ignore system files  
+.DS_Store  
+Thumbs.db  
 
-# Ignore Python cache files
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
+# Ignore Python cache files  
+__pycache__/  
+*.pyc  
+*.pyo  
+*.pyd  
 
-# Ignore Jupyter Notebook checkpoints
-.ipynb_checkpoints/
+# Ignore Jupyter Notebook checkpoints  
+.ipynb_checkpoints/  
 
+# Ignore logs  
+logs/  
+*.log  
 
-# Ignore virtual environment and large files
-*.dll
-*.lib
+# Ignore compiled Python files  
+*.so  
+*.dll  
+*.lib  
+*.bin  
+*.out  
+
+# Ignore Qdrant database files (if using local storage)  
+qdrant_db/  
+
+# Ignore Streamlit cache files  
+.streamlit/  
+
+# Ignore large files  
+*.tar.gz  
+*.zip  
+*.rar  
