@@ -12,7 +12,6 @@ langchain_community  # ✅ Explicitly install langchain_community
 pydantic==1.10.13  # ✅ Ensure Pydantic v1 (Fixes LLM Class Issue)
 
 # Vector DB
-qdrant-client  # If using Qdrant vector DB
 
 # Logging & Monitoring
 arize-phoenix  # If using Arize for monitoring
